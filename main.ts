@@ -5,49 +5,30 @@
  * This program lights up neo pixels based on light level
 */
 
-let distance = 0
-let neopixelStrip: neopixel.Strip = null
+let lightLevel = 0
+
+// Set up Neopixels
+let strip = neopixel.create(DigitalPin.P0, 4, NeoPixelMode.RGB)
+strip.clear()
+strip.show()
 
 input.onButtonPressed(Button.A, function () {
-    // Measure the lightlevel
-       let lightlevel = input.lightLevel()
+    lightLevel = input.lightLevel()
 
-        // Turns on neopixels based on light level
-        if (lightlevel > 208) {
+    strip.clear() // Turn off all Neopixels before setting new ones
 
-            // Turn all NeoPixels on if light level is more than 208
-            neopixelStrip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
-            neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Red))
-            neopixelStrip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
-            neopixelStrip.setPixelColor(2, neopixel.colors(NeoPixelColors.Red))
-            neopixelStrip.setPixelColor(3, neopixel.colors(NeoPixelColors.Red))
-            neopixelStrip.show()
-        }
+    if (lightLevel > 208) {
+        strip.setPixelColor(3, neopixel.colors(NeoPixelColors.Red))
+    }
+    if (lightLevel > 156) {
+        strip.setPixelColor(2, neopixel.colors(NeoPixelColors.Yellow))
+    }
+    if (lightLevel > 104) {
+        strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Green))
+    }
+    if (lightLevel > 52) {
+        strip.setPixelColor(0, neopixel.colors(NeoPixelColors.Blue))
+    }
 
-        if (lightlevel > 156) {
-
-            // Turn 3 NeoPixels on if light level is more than 156
-            neopixelStrip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
-            neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Red))
-            neopixelStrip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
-            neopixelStrip.setPixelColor(2, neopixel.colors(NeoPixelColors.Red))
-            neopixelStrip.show()
-        }
-
-        if (lightlevel > 104) {
-
-            // Turn 2 NeoPixels on if light level is more than 104
-            neopixelStrip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
-            neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Red))
-            neopixelStrip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
-            neopixelStrip.show()
-        }
-
-        if (lightlevel > 52) {
-
-           // Turn 1 NeoPixel on if light level is more than 52
-            neopixelStrip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
-            neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Red))
-            neopixelStrip.show()
-        }
-        })
+    strip.show()
+})
